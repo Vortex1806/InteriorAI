@@ -47,18 +47,60 @@ function CreateNew() {
             return res[0].id;
         }
     }
+    // const GenerateAiImage = async () => {
+    //     console.time("API Processing Time");
+    //     setLoading(true);
+    //     const rawimageUrl = await SaveRawImageToFirebase();
+    //     const result = await axios.post('/api/redesign-room', { imageUrl: rawimageUrl, roomType: formData?.roomType, designType: formData?.designType, additional: formData?.additional, userEmail: user?.primaryEmailAddress?.emailAddress }, { timeout: 60000 });
+    //     console.log(result);
+    //     setAIOutput(result.data.result);
+    //     setLoading(false);
+    //     updateUserCredits();
+    //     setOpenOutputDialog(true);
+    //     console.timeEnd("API Processing Time");
+    // }
     const GenerateAiImage = async () => {
         console.time("API Processing Time");
+
+        // Start loading
         setLoading(true);
-        const rawimageUrl = await SaveRawImageToFirebase();
-        const result = await axios.post('/api/redesign-room', { imageUrl: rawimageUrl, roomType: formData?.roomType, designType: formData?.designType, additional: formData?.additional, userEmail: user?.primaryEmailAddress?.emailAddress }, { timeout: 60000 });
-        console.log(result);
-        setAIOutput(result.data.result);
-        setLoading(false);
-        updateUserCredits();
-        setOpenOutputDialog(true);
+
+        try {
+            // Save raw image to Firebase and get the URL
+            const rawimageUrl = await SaveRawImageToFirebase();
+
+            // Post request to the redesign-room API
+            const result = await axios.post('/api/redesign-room', {
+                imageUrl: rawimageUrl,
+                roomType: formData?.roomType,
+                designType: formData?.designType,
+                additional: formData?.additional,
+                userEmail: user?.primaryEmailAddress?.emailAddress
+            }, {
+                timeout: 60000
+            });
+
+            // Handle the result
+            console.log(result);
+            setAIOutput(result.data.result);
+
+            // Update credits and open the output dialog
+            updateUserCredits();
+            setOpenOutputDialog(true);
+        } catch (error) {
+            // Error handling
+            console.error("Error generating AI image:", error);
+
+            // Optionally, set an error message to display to the user
+            alert("There was an error processing your request. Please try again later.");
+        } finally {
+            // Stop loading (even if there was an error)
+            setLoading(false);
+        }
+
         console.timeEnd("API Processing Time");
     }
+
     const SaveRawImageToFirebase = async () => {
         const fileName = Date.now() + "_raw.png";
         const imageRef = ref(storage, 'interior-ai/' + fileName)
