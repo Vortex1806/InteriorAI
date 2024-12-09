@@ -47,18 +47,7 @@ function CreateNew() {
             return res[0].id;
         }
     }
-    // const GenerateAiImage = async () => {
-    //     console.time("API Processing Time");
-    //     setLoading(true);
-    //     const rawimageUrl = await SaveRawImageToFirebase();
-    //     const result = await axios.post('/api/redesign-room', { imageUrl: rawimageUrl, roomType: formData?.roomType, designType: formData?.designType, additional: formData?.additional, userEmail: user?.primaryEmailAddress?.emailAddress }, { timeout: 60000 });
-    //     console.log(result);
-    //     setAIOutput(result.data.result);
-    //     setLoading(false);
-    //     updateUserCredits();
-    //     setOpenOutputDialog(true);
-    //     console.timeEnd("API Processing Time");
-    // }
+
     const GenerateAiImage = async () => {
         console.time("API Processing Time");
 
@@ -76,8 +65,6 @@ function CreateNew() {
                 designType: formData?.designType,
                 additional: formData?.additional,
                 userEmail: user?.primaryEmailAddress?.emailAddress
-            }, {
-                timeout: 60000
             });
 
             // Handle the result
