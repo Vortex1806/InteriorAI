@@ -9,7 +9,7 @@ import React, { useContext } from 'react';
 
 function Header() {
     const { userDetails } = useContext(UserDetailContext);
-    console.log(userDetails);
+    console.log(userDetails?.credits);
     return (
         <header className="p-5 shadow-md">
             <div className="container mx-auto flex justify-between items-center">
@@ -18,7 +18,7 @@ function Header() {
                     <h1 className="font-bold text-lg">Interior AI</h1>
                 </Link>
 
-                {userDetails.credits !== 0 ? (
+                {userDetails?.credits !== 0 ? (
                     <div className="flex items-center gap-4">
                         <Link href="/dashboard/buy-credits">
                             <Button variant="ghost" className="rounded-full text-primary">
@@ -27,7 +27,7 @@ function Header() {
                         </Link>
                         <div className="flex items-center gap-2 bg-slate-200 px-3 py-1 rounded-full">
                             <Image src="/star.png" width={20} height={20} alt="credits" />
-                            <span>{userDetails.credits}</span>
+                            <span>{userDetails?.credits}</span>
                         </div>
                         <Link href="/dashboard">
                             <Button variant="outline" className="rounded-full">

@@ -14,6 +14,7 @@ import AiOutputDialog from '../_components/AiOutputDialog'
 import { db } from '@/config/db'
 import { UserDetailContext } from '@/app/_context/UserDetailContext'
 import { Users } from '@/config/schema'
+import { eq } from 'drizzle-orm'
 
 function CreateNew() {
     const { user } = useUser();
@@ -38,7 +39,9 @@ function CreateNew() {
     const updateUserCredits = async () => {
         const res = await db.update(Users).set({
             credits: userDetails?.credits - 1
-        }).returning({ id: Users.id });
+        })
+            .where(eq(Users.email, userDetails?.email))
+            .returning({ id: Users.id });
         if (res) {
             setUserDetails(prev => ({
                 ...prev,

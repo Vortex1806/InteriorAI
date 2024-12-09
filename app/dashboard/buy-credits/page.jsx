@@ -1,9 +1,10 @@
 "use client";
-import { UserDetailContext, userDetails } from "@/app/_context/UserDetailContext";
+import { UserDetailContext } from "@/app/_context/UserDetailContext";
 import { Button } from "@/components/ui/button";
 import { db } from "@/config/db";
 import { Users } from "@/config/schema";
 import { PayPalButtons } from "@paypal/react-paypal-js";
+import { eq } from "drizzle-orm";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 
@@ -21,6 +22,8 @@ function BuyCredits() {
     const router = useRouter();
     const onPaymentSuccess = async () => {
         console.log("payment success");
+
+        console.log("userDetails.email:", userDetails?.email);
         //update user credits in db
         if (!userDetails) {
             return <p>Loading user details...</p>;
@@ -28,9 +31,10 @@ function BuyCredits() {
         console.log("userDetails.credits:", userDetails?.credits);
         console.log("selectedOption.credits:", selectedOption?.credits);
 
-        const result = await db.update(Users).set({ credits: userDetails?.credits + selectedOption?.credits }).returning(
-            { id: Users.id }
-        );
+        const result = await db.update(Users)
+            .set({ credits: userDetails?.credits + selectedOption?.credits })
+            .where(eq(Users.email, userDetails?.email))
+            .returning({ id: Users.id });
         if (result) {
             setUserDetails(prev => ({
                 ...prev,
