@@ -9,7 +9,6 @@ import React, { useContext } from 'react';
 
 function Header() {
     const { userDetails } = useContext(UserDetailContext);
-    console.log(userDetails?.credits);
     return (
         <header className="p-5 shadow-md">
             <div className="container mx-auto flex justify-between items-center">
@@ -18,7 +17,7 @@ function Header() {
                     <h1 className="font-bold text-lg">Interior AI</h1>
                 </Link>
 
-                {userDetails?.credits !== 0 ? (
+                {userDetails ? (
                     <div className="flex items-center gap-4">
                         <Link href="/dashboard/buy-credits">
                             <Button variant="ghost" className="rounded-full text-primary">

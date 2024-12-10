@@ -20,7 +20,6 @@ function CreateNew() {
     const { user } = useUser();
     const [formData, setFormData] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [outputResult, setOutputResult] = useState();
     const [aiOutput, setAIOutput] = useState();
     const [openOutputDialog, setOpenOutputDialog] = useState(false);
     const [orgImage, setorgImage] = useState();
@@ -107,7 +106,7 @@ function CreateNew() {
         <div>
             <h2 className='font-bold text-4xl text-primary text-center'>Build Your Dream Room Using InteriorAI</h2>
             <p className='text-center text-gray-500'>Transform any room with one click using InteriorAI. Select a space, choose your style, ans watch as AI instantly reimagines your environment</p>
-            <div className='grid grid-cols-1 md:grid-cols-2  justify-center mt-10 gap-10'>
+            <div className='grid grid-cols-1 md:grid-cols-2 justify-center mt-10 gap-10'>
                 <ImageSelection selectedImage={(value) => onHandleInputChange(value, 'image')} />
                 {/* Form input section */}
                 <div>
