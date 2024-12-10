@@ -31,10 +31,12 @@ export default function Home() {
                 Transform Your Space with AI: Effortless Room & Home Interior Design at Your Fingertips!
               </p>
             </div>
-            <Button className="bg-primary text-lg" size="lg">
-              Get started
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+            <Link href={'/dashboard/create-new'} >
+              <Button className="bg-primary text-lg" size="lg">
+                Get started
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
           </div>
 
           {/* Before/After Section */}
